@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
             background-color: #f9f9f9;
             margin: 0;
             padding: 0;
-            background: url('https://bu.dusays.com/2023/10/02/651a4d79bb412.jpg') no-repeat center center fixed;
+            background: url('https://7.isyangs.cn/85/67b4add13f820-85.webp') no-repeat center center fixed;
             background-size: cover;
         }
         .container {
@@ -93,7 +93,7 @@
 </div>
 
 <footer>
-    <p>❖星港◎Star☆友链检测 © 2024</p>
+    <p>❖星港◎Star☆友链检测 © 2024-2025</p>
 </footer>
 
 <script>
@@ -102,7 +102,7 @@
         .then(response => response.json())
         .then(data => {
             // 提取整体统计信息
-            const summary = `总数: ${data.total_count} | 可访问: ${data.accessible_count} | 不可访问: ${data.inaccessible_count}`;
+            const summary = `总数: ${data.total_count} | 可访问: ${data.accessible_count} | 不可访问/存疑: ${data.inaccessible_count}`;
             document.getElementById('summary').textContent = summary + ` | 检测时间: ${data.timestamp}`;
 
             // 动态生成表格数据
