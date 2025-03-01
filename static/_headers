@@ -2,4 +2,4 @@
   Access-Control-Allow-Origin: *
 
 /result.json
-  Access-Control-Allow-Origin: https://blog.starsharbor.com/
+  Access-Control-Allow-Origin: https://blog.starsharbor.com
