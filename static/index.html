@@ -3,71 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>友链检测结果</title>
+    <title>友链检测 | ❖星港◎Star☆</title>
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
     <style>
+        /* 现代化样式变量 */
+        :root {
+            --primary: #4f46e5;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --glass: rgba(255, 255, 255, 0.88);
+            --text: #2d3748;
+            --bg: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --table-bg: rgba(255, 255, 255, 0.95);
+            --link-color: #4f46e5;
+            --latency-good: #e9f9f0;
+            --latency-normal: #fff5e6;
+            --latency-bad: #fee2e2;
+        }
+
+        /* 深色模式变量 */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary: #e5bd46;
+                --glass: rgba(30, 30, 30, 0.92);
+                --text: #f8fafc;
+                --bg: #1a1a1a;
+                --card-bg: rgba(40, 40, 40, 0.95);
+                --table-bg: rgba(40, 40, 40, 0.95);
+                --link-color: #f8dc81;
+                --latency-good: rgba(16, 185, 129, 0.15);
+                --latency-normal: rgba(245, 158, 11, 0.15);
+                --latency-bad: rgba(239, 68, 68, 0.15);
+            }
+            body {
+                background-blend-mode: overlay;
+                background-color: rgba(0, 0, 0, 0.6);
+            }
+        }
+
         body {
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            min-height: 100vh;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             background: url('https://7.isyangs.cn/85/67b4add13f820-85.webp') no-repeat center center fixed;
             background-size: cover;
+            color: var(--text);
         }
+
         .container {
             width: 90%;
-            max-width: 1200px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #ffffffaa;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
+            max-width: 1400px;
+            margin: 40px auto;
+            backdrop-filter: blur(8px);
+            background: var(--glass);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-sizing: border-box;
         }
+
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
         h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 10px;
+            color: var(--primary);
+            font-size: 2rem;
+            margin: 0 0 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        #summary {
-            text-align: center;
-            font-size: 1.1em;
-            margin-bottom: 20px;
-            color: #555;
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.8rem;
+            margin: 1rem 0;
         }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-card div:first-child {
+            font-size: 1.5em;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card div:nth-child(2) {
+            font-size: 1.3em;
+            font-weight: 500;
+            margin: 0.3rem 0;
+        }
+
+        .stat-card div:last-child {
+            font-size: 0.9em;
+            color: #64748b;
+        }
+
         table {
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+            margin: 1.5rem 0;
         }
-        th, td {
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            text-align: center; /* 将文本居中 */
-        }
+
         th {
-            background-color: #f2f2f2;
-            color: #333;
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            font-weight: bold;
         }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
+
+        td {
+            padding: 1.2rem;
+            background: var(--table-bg);
+            position: relative;
+            vertical-align: middle;
         }
+
+        tr {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
         tr:hover {
-            background-color: #f1f1f1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
+
+        .status-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .latency {
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
         footer {
             text-align: center;
-            margin-top: 40px;
-            color: #fff;
+            padding: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
         }
-        /* 响应式设计 */
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 8px;
+        }
+
         @media (max-width: 768px) {
-            .container {
-                width: 95%;
-                margin: 20px auto;
-                padding: 15px;
+            body {
+                padding: 10px;
             }
+            
+            .container {
+                width: calc(100% - 20px);
+                margin: 20px auto;
+                padding: 1rem;
+                border-radius: 12px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 0.6rem;
+            }
+
+            .stat-card {
+                padding: 0.8rem;
+            }
+
+            .stat-card div:first-child {
+                font-size: 1.3em;
+            }
+
+            .stat-card div:nth-child(2) {
+                font-size: 1.1em;
+            }
+
+            .table-container {
+                margin-left: 0;
+                margin-right: 0;
+                width: 100%;
+            }
+
             th, td {
-                padding: 10px 8px;
+                padding: 10px 12px;
+                white-space: nowrap;
+                min-width: 100px;
             }
         }
     </style>
@@ -75,73 +223,96 @@
 <body>
 
 <div class="container">
-    <h1>友链检测结果</h1>
-    <p id="summary"></p>
+    <div class="header">
+        <h1>友链健康监测报告</h1>
+        <div class="stats-grid" id="stats-grid"></div>
+    </div>
     
-    <table>
-        <thead>
-            <tr>
-                <th>名称</th>
-                <th>链接</th>
-                <th>时延 (秒)</th>
-            </tr>
-        </thead>
-        <tbody id="link-table-body">
-            <!-- 表格数据将由JS动态生成 -->
-        </tbody>
-    </table>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>站点名称</th>
+                    <th>访问地址</th>
+                    <th>响应状态</th>
+                    <th>网络时延</th>
+                </tr>
+            </thead>
+            <tbody id="link-table-body">
+                <!-- 数据由JS生成 -->
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <footer>
-    <p>❖星港◎Star☆友链检测 © 2024-2025</p>
+    <p>❖星港◎Star☆ 数据更新于 <span id="update-time"></span></p>
 </footer>
 
 <script>
-    // 从 result.json 文件中获取数据
     fetch('./result.json')
         .then(response => response.json())
         .then(data => {
-            // 提取整体统计信息
-            const summary = `总数: ${data.total_count} | 可访问: ${data.accessible_count} | 不可访问/存疑: ${data.inaccessible_count}`;
-            document.getElementById('summary').textContent = summary + ` | 检测时间: ${data.timestamp}`;
+            // 统计卡片
+            const stats = [
+                {title: '总站点数', value: data.total_count, icon: '📊'},
+                {title: '正常运行', value: data.accessible_count, icon: '✅'},
+                {title: '异常站点', value: data.inaccessible_count, icon: '⚠️'},
+                {title: '检测时间', value: new Date(data.timestamp).toLocaleString(), icon: '🕒'}
+            ];
 
-            // 动态生成表格数据
+            const statsGrid = document.getElementById('stats-grid');
+            stats.forEach(stat => {
+                const card = document.createElement('div');
+                card.className = 'stat-card';
+                card.innerHTML = `
+                    <div>${stat.icon}</div>
+                    <div>${stat.value}</div>
+                    <div>${stat.title}</div>
+                `;
+                statsGrid.appendChild(card);
+            });
+
+            // 表格数据
             const tbody = document.getElementById('link-table-body');
             data.link_status.forEach(item => {
                 const row = document.createElement('tr');
+                
+                const status = item.latency >= 0 ? 
+                    `<span class="status-dot" style="background:${item.latency < 1 ? 'var(--success)' : 'var(--warning)'}"></span>
+                     ${item.latency < 1 ? '优秀' : '正常'}` : 
+                    `<span class="status-dot" style="background:var(--danger)"></span>异常`;
 
-                // 名称列
-                const nameCell = document.createElement('td');
-                nameCell.textContent = item.name;
-                row.appendChild(nameCell);
+                const latencyDisplay = item.latency >= 0 ? 
+                    `<span class="latency" style="background:${item.latency < 1 ? 'var(--latency-good)' : 'var(--latency-normal)'}">
+                        ${item.latency.toFixed(2)}s
+                    </span>` : 
+                    '<span class="latency" style="background:var(--latency-bad)">不可达</span>';
 
-                // 链接列
-                const linkCell = document.createElement('td');
-                const linkElement = document.createElement('a');
-                linkElement.href = item.link;
-                linkElement.target = "_blank";
-                linkElement.textContent = item.link;
-                linkCell.appendChild(linkElement);
-                row.appendChild(linkCell);
-
-                // 时延列
-                const latencyCell = document.createElement('td');
-                latencyCell.textContent = item.latency >= 0 ? item.latency.toFixed(2) : '不可达';
-                row.appendChild(latencyCell);
-
+                row.innerHTML = `
+                    <td style="font-weight:500">${item.name}</td>
+                    <td>
+                        <a href="${item.link}" target="_blank" 
+                           style="color:var(--primary);text-decoration:none;
+                                  border-bottom:2px solid rgba(79,70,229,0.2)">
+                           ${new URL(item.link).hostname}
+                        </a>
+                    </td>
+                    <td>${status}</td>
+                    <td>${latencyDisplay}</td>
+                `;
                 tbody.appendChild(row);
             });
+
+            document.getElementById('update-time').textContent = new Date(data.timestamp).toLocaleString();
         })
         .catch(error => {
-            console.error('Error loading JSON data:', error);
-            const tbody = document.getElementById('link-table-body');
-            const row = document.createElement('tr');
-            const cell = document.createElement('td');
-            cell.colSpan = 3;
-            cell.textContent = '无法加载数据';
-            cell.style.textAlign = 'center';
-            row.appendChild(cell);
-            tbody.appendChild(row);
+            console.error('Error:', error);
+            document.getElementById('stats-grid').innerHTML = `
+                <div class="stat-card" style="grid-column:1/-1;color:var(--danger)">
+                    <div style="font-size:1.2em">⚠️ 数据加载失败</div>
+                </div>
+            `;
         });
 </script>
 
