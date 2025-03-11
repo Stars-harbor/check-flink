@@ -98,7 +98,7 @@ def handle_api_requests():
 
 def main():
     """主逻辑"""
-    json_url = 'https://blog.liushen.fun/flink_count.json'
+    json_url = 'https://blog.starsharbor.com/flink_count.json'
     data = fetch_json_data(json_url)
     if not data:
         return
